@@ -163,7 +163,7 @@ service cloud.firestore {
       let countField = 'todoCount';
       let countRefField = 'resourceRef';
 
-      // vallidate count ref is in todos collection
+      // validate count ref is in todos collection
       let validRef = refCollection(requestData()[countRefField]) == 'todos';
 
       // check for counter
