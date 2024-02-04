@@ -1,26 +1,42 @@
 <script lang="ts">
-	import { addTodo, getTodos } from '$lib/todos';
+	import { addTodo, getTodos, getTotalTodos, getTotalUserTodos } from '$lib/todos';
 	import TodoItem from '@components/todo-item.svelte';
+	import { getContext } from 'svelte';
 
-	export let user: UserType;
+	const user = getContext<UserType>('user');
 
-	// Form Text
-	let text = 'some task';
+	const total = getTotalTodos();
+	const userTotal = getTotalUserTodos(user.uid);
+
+	const genText = () => Math.random().toString(36).substring(2, 15);
+
+	let text = genText();
 
 	const todos = getTodos(user.uid);
 
 	function add() {
 		addTodo(text, user.uid);
-		text = '';
+		text = genText();
 	}
 </script>
 
 {#if $todos?.length}
-	<ul>
-		{#each $todos || [] as todo}
-			<TodoItem {todo} {user} />
-		{/each}
-	</ul>
+	<p><b>Total Todos:</b> {$total}</p>
+	<p><b>My Todos:</b> {$userTotal}</p>
+	<table class="border-separate border-spacing-x-4">
+		<thead>
+			<tr>
+				<th>Task</th>
+				<th>ID</th>
+				<th colspan="2">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{#each $todos || [] as todo}
+				<TodoItem {todo} />
+			{/each}
+		</tbody>
+	</table>
 {/if}
 <form on:submit|preventDefault={add}>
 	<input class="border p-2 rounded-lg" bind:value={text} />

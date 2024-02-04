@@ -27,6 +27,7 @@ service cloud.firestore {
       return request.path[3];
     }
     function requestDoc() {
+      // 4th path is doc id
       return request.path[4];
     }
     function isIncrement(before, after, field) {
@@ -54,7 +55,7 @@ service cloud.firestore {
       return data[field] == 1;
     }
 
-    // COUNTER FUNCTIONS
+    // COUNTER BASE FUNCTIONS
 
     function isCountDecrement(before, after, field, isDeleteDoc) {
       // field is deleted or doc is deleted from count = 1
@@ -75,41 +76,49 @@ service cloud.firestore {
       return isIncrement(before, after, field) || isFirstIncrement;
     }
 
-    function counter(field, refField) {
+    function isCount(before, after, field, cCreate, cDelete, rCreate, rDelete) {
+
+      // is increment or count create
+      let isValidIncrement = isCountIncrement(before, after, field, cCreate);
+
+      // is decrement or count delete
+      let isValidDecrement = isCountDecrement(before, after, field, cDelete);
+
+      // is valid counter with resource create or delete
+      return (isValidIncrement && rCreate) || (isValidDecrement && rDelete);
+    }
+
+    // COUNTER RESOURCE FUNCTIONS
+
+    function counterDoc(field, refField) {
 
       let before = resource.data;
       let after = request.resource.data;
 
-      // only count as 1 📖 on resource doc
-      let resourceCreate = docCreated(after[refField]);
-      let resourceDelete = docDeleted(after[refField]);
+      // doc created or deleted, only count as 1 📖 on resource doc
+      let rCreate = docCreated(after[refField]);
+      let rDelete = docDeleted(after[refField]);
 
-      // is increment with resource create
-      let isValidIncrement = isCountIncrement(before, after, field, createResource());
+      // counter doc created or deleted
+      let cCreate = createResource();
+      let cDelete = deleteResource();
 
-      // is decrement with resource delete
-      let isValidDecrement = isCountDecrement(before, after, field, deleteResource());
-
-      // is valid counter
-      return (isValidIncrement && resourceCreate) || (isValidDecrement && resourceDelete);
+      return isCount(before, after, field, cCreate, cDelete, rCreate, rDelete);
     }
 
-    function requestCounter(field, path) {
+    function requestCounterDoc(field, path) {
 
-      // only count as 1 📖 on count doc
+      // counter doc created or deleted, only count as 1 📖 on count doc
       let before = get(path).data;
       let after = getAfter(path).data;
-      let createCount = docCreated(path);
-      let deleteCount = docDeleted(path);
+      let cCreate = docCreated(path);
+      let cDelete = docDeleted(path);
 
-      // is increment with resource create
-      let isValidIncrement = isCountIncrement(before, after, field, createCount);
+      // doc created or deleted
+      let rCreate = createResource();
+      let rDelete = deleteResource();
 
-      // is decrement with resource delete
-      let isValidDecrement = isCountDecrement(before, after, field, deleteCount);
-
-      // is valid counter
-      return (isValidIncrement && createResource()) || (isValidDecrement && deleteResource());
+      return isCount(before, after, field, cCreate, cDelete, rCreate, rDelete);
     } 
 
     // RULES
@@ -121,7 +130,7 @@ service cloud.firestore {
       let countPath = /databases/$(database)/documents/_counters/$(requestCollection());
 
       // check for counter
-      return requestCounter(countField, countPath);
+      return requestCounterDoc(countField, countPath);
     }
 
     function isCounter() {
@@ -135,7 +144,7 @@ service cloud.firestore {
       let validFields = hasOnly(request.resource.data, [countField, countRefField]);
 
       // check for counter
-      return counter(countField, countRefField) && validFields && validRef;
+      return counterDoc(countField, countRefField) && validFields && validRef;
     }
 
     function isUserCounter() {
@@ -147,7 +156,7 @@ service cloud.firestore {
       let validRef = request.resource.data[countRefField][3] == 'todos';
 
       // check for counter
-      return counter(countField, countRefField) && validRef;
+      return counterDoc(countField, countRefField) && validRef;
     }
 
     function userCounter() {
@@ -157,7 +166,7 @@ service cloud.firestore {
       let userField = 'todoCount';
 
       // check for todo counter
-      return requestCounter(userField, userPath);
+      return requestCounterDoc(userField, userPath);
     }
 
     // MATCHES

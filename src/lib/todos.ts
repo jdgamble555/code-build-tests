@@ -32,6 +32,20 @@ export const getTodos = (uid: string) => writable<Todo[] | null>(
             })
 );
 
+export const getTotalTodos = () => writable<number>(0, (set: Subscriber<number>) =>
+    onSnapshot(
+        doc(db, '_counters/todos'),
+        (q) => set(q.exists() ? q.data().count : 0)
+    )
+);
+
+export const getTotalUserTodos = (uid: string) => writable<number>(0, (set: Subscriber<number>) =>
+    onSnapshot(
+        doc(db, `users/${uid}`),
+        (q) => set(q.exists() ? q.data().todoCount : 0)
+    )
+);
+
 export const addTodo = async (text: string, uid: string) => {
 
     const countRef = doc(db, '_counters/todos');
