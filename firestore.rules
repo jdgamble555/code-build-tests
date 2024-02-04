@@ -54,6 +54,8 @@ service cloud.firestore {
       return data[field] == 1;
     }
 
+    // COUNTER FUNCTIONS
+
     function isCountDecrement(before, after, field, isDeleteDoc) {
       // field is deleted or doc is deleted from count = 1
       let isDelete = isDeleteDoc || isDeleteField(before, after, field);
@@ -77,16 +79,10 @@ service cloud.firestore {
 
       let before = resource.data;
       let after = request.resource.data;
-      
+
       // only count as 1 📖 on resource doc
       let resourceCreate = docCreated(after[refField]);
       let resourceDelete = docDeleted(after[refField]);
-
-      // validate counter reference
-      let validFields = hasOnly(after, [field, refField]);
-
-      // validate collection ref
-      let validRef = requestDoc() == after[refField][3];
 
       // is increment with resource create
       let isValidIncrement = isCountIncrement(before, after, field, createResource());
@@ -98,7 +94,7 @@ service cloud.firestore {
       let validCounter = (isValidIncrement && resourceCreate) || (isValidDecrement && resourceDelete);
 
       // is valid counter doc
-      return validCounter && validRef && validFields;
+      return validCounter;
     }
 
     function requestCounter(field, path) {
@@ -121,9 +117,9 @@ service cloud.firestore {
 
     // RULES
 
-    function hasCounter() {
+    function todoCounter() {
 
-      // config, only count as 1 📖 on counter doc
+      // config
       let countField = 'count';
       let countPath = /databases/$(database)/documents/_counters/$(requestCollection());
 
@@ -137,19 +133,47 @@ service cloud.firestore {
       let countField = 'count';
       let countRefField = 'resourceRef';
 
+      // validate collection ref
+      let validRef = requestDoc() == request.resource.data[countRefField][3];
+      let validFields = hasOnly(request.resource.data, [countField, countRefField]);
+
       // check for counter
-      return counter(countField, countRefField);
+      return counter(countField, countRefField) && validFields && validRef;
+    }
+
+    function isUserCounter() {
+
+      // config
+      let countField = 'todoCount';
+      let countRefField = 'resourceRef';
+
+      let validRef = request.resource.data[countRefField][3] == 'todos';
+
+      // check for counter
+      return counter(countField, countRefField) && validRef;
+    }
+
+    function userCounter() {
+
+      // config
+      let userPath = /databases/$(database)/documents/users/$(request.auth.uid);
+      let userField = 'todoCount';
+
+      // check for todo counter
+      return requestCounter(userField, userPath);
     }
 
     // MATCHES
 
     match /users/{document} {
-      allow read, write;
+      allow read;
+      allow write: if isUserCounter();
     }
 
     match /todos/{document} {
       allow read;
-      allow create, delete: if hasCounter();
+      allow update;
+      allow create, delete: if todoCounter() && userCounter();
     }
 
     match /_counters/{document} { 

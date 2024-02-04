@@ -54,7 +54,8 @@ export const addTodo = async (text: string, uid: string) => {
     // extra
     const userRef = doc(db, 'users/' + uid);
     batch.set(userRef, {
-        postCount: increment(1)
+        todoCount: increment(1),
+        resourceRef: todoRef
     }, { merge: true });
 
     batch.commit();
@@ -79,7 +80,8 @@ export const deleteTodo = (id: string, uid: string) => {
     // extra
     const userRef = doc(db, 'users/' + uid);
     batch.set(userRef, {
-        postCount: increment(-1)
+        todoCount: increment(-1),
+        resourceRef: todoRef
     }, { merge: true });
 
     batch.delete(todoRef);
