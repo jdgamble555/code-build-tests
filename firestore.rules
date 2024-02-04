@@ -14,6 +14,10 @@ service cloud.firestore {
       // 1 📖 doc at path is created
       return existsAfter(path) && !exists(path);
     }
+    function requestData() {
+      // get request data
+      return request.resource.data;
+    }
     function createResource() {
       // create resource
       return request.method == 'create';
@@ -21,7 +25,11 @@ service cloud.firestore {
     function deleteResource() {
       // delete resource
       return request.method == 'delete';
-    } 
+    }
+    function refCollection(docRef) {
+      // get doc reference collection
+      return docRef[3];
+    }
     function requestCollection() {
       // 3rd path is collection
       return request.path[3];
@@ -139,9 +147,11 @@ service cloud.firestore {
       let countField = 'count';
       let countRefField = 'resourceRef';
 
-      // validate collection ref
-      let validRef = requestDoc() == request.resource.data[countRefField][3];
-      let validFields = hasOnly(request.resource.data, [countField, countRefField]);
+      // validate collection ref is same as count document id
+      let validRef = requestDoc() == refCollection(requestData()[countRefField]);
+
+      // can only have a count field and a count ref field
+      let validFields = hasOnly(requestData(), [countField, countRefField]);
 
       // check for counter
       return counterDoc(countField, countRefField) && validFields && validRef;
@@ -153,7 +163,8 @@ service cloud.firestore {
       let countField = 'todoCount';
       let countRefField = 'resourceRef';
 
-      let validRef = request.resource.data[countRefField][3] == 'todos';
+      // vallidate count ref is in todos collection
+      let validRef = refCollection(requestData()[countRefField]) == 'todos';
 
       // check for counter
       return counterDoc(countField, countRefField) && validRef;
