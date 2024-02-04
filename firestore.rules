@@ -91,10 +91,7 @@ service cloud.firestore {
       let isValidDecrement = isCountDecrement(before, after, field, deleteResource());
 
       // is valid counter
-      let validCounter = (isValidIncrement && resourceCreate) || (isValidDecrement && resourceDelete);
-
-      // is valid counter doc
-      return validCounter;
+      return (isValidIncrement && resourceCreate) || (isValidDecrement && resourceDelete);
     }
 
     function requestCounter(field, path) {

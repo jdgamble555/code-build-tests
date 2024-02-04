@@ -1,0 +1,55 @@
+[debug] [2024-02-04T15:03:21.813Z] ----------------------------------------------------------------------
+[debug] [2024-02-04T15:03:21.815Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\jdgam\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2024-02-04T15:03:21.815Z] CLI Version:   13.1.0
+[debug] [2024-02-04T15:03:21.816Z] Platform:      win32
+[debug] [2024-02-04T15:03:21.816Z] Node Version:  v18.18.0
+[debug] [2024-02-04T15:03:21.817Z] Time:          Sun Feb 04 2024 09:03:21 GMT-0600 (Central Standard Time)
+[debug] [2024-02-04T15:03:21.817Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-02-04T15:03:21.882Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-02-04T15:03:21.882Z] > authorizing via signed-in user (jdgamble555@gmail.com)
+[debug] [2024-02-04T15:03:22.022Z] java version "21.0.2" 2024-01-16 LTS
+
+[debug] [2024-02-04T15:03:22.023Z] Java(TM) SE Runtime Environment (build 21.0.2+13-LTS-58)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.2+13-LTS-58, mixed mode, sharing)
+
+[debug] [2024-02-04T15:03:22.069Z] Parsed Java major version: 21
+[info] i  emulators: Starting emulators: auth, functions, firestore, storage {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, storage"}}
+[debug] [2024-02-04T15:03:22.091Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-02-04T15:03:22.091Z] [auth] Authentication Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-02-04T15:03:22.092Z] [firestore] Firestore Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-02-04T15:03:22.092Z] [firestore.websocket] websocket server for firestore only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-02-04T15:03:22.092Z] [storage] Storage Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-02-04T15:03:22.092Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2024-02-04T15:03:22.102Z] [hub] writing locator at C:\Users\jdgam\AppData\Local\Temp\hub-code-build-test-50f46.json
+[debug] [2024-02-04T15:03:22.114Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-02-04T15:03:22.114Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-02-04T15:03:22.114Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] !  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: database, hosting, pubsub {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mdatabase, hosting, pubsub\u001b[22m"}}
+[debug] [2024-02-04T15:03:22.117Z] defaultcredentials: writing to file C:\Users\jdgam\AppData\Roaming\firebase\jdgamble555_gmail_com_application_default_credentials.json
+[debug] [2024-02-04T15:03:22.118Z] Setting GAC to C:\Users\jdgam\AppData\Roaming\firebase\jdgamble555_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\jdgam\\AppData\\Roaming\\firebase\\jdgamble555_gmail_com_application_default_credentials.json"}}
+[debug] [2024-02-04T15:03:22.121Z] > refreshing access token with scopes: []
+[debug] [2024-02-04T15:03:22.123Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-02-04T15:03:22.123Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-04T15:03:22.623Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-02-04T15:03:22.623Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-04T15:03:22.631Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/code-build-test-50f46/adminSdkConfig [none]
+[debug] [2024-02-04T15:03:23.498Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/code-build-test-50f46/adminSdkConfig 200
+[debug] [2024-02-04T15:03:23.498Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/code-build-test-50f46/adminSdkConfig {"projectId":"code-build-test-50f46","storageBucket":"code-build-test-50f46.appspot.com","locationId":"us-central"}
+[debug] [2024-02-04T15:03:23.512Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2024-02-04T15:03:23.513Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2024-02-04T15:03:23.513Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\jdgam\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.18.2.jar","--host","127.0.0.1","--port",8080,"--websocket_port",9150,"--project_id","code-build-test-50f46","--rules","C:\\web projects\\code-build-tests\\firestore.rules","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\jdgam\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.18.2.jar\",\"--host\",\"127.0.0.1\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"code-build-test-50f46\",\"--rules\",\"C:\\\\web projects\\\\code-build-tests\\\\firestore.rules\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[info] +  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[debug] [2024-02-04T15:03:31.598Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2024-02-04T15:03:32.431Z] Temp file directory for storage emulator: C:\Users\jdgam\AppData\Local\Temp/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: C:\\Users\\jdgam\\AppData\\Local\\Temp/firebase/storage/blobs"}}
+[debug] [2024-02-04T15:03:32.438Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2024-02-04T15:03:32.438Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2024-02-04T15:03:32.438Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\jdgam\\.cache\\firebase\\emulators\\ui-v1.11.7\\server\\server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\jdgam\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.11.7\\\\server\\\\server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2024-02-04T15:03:32.557Z] Web / API server started at 127.0.0.1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
+[debug] [2024-02-04T15:03:32.557Z] Web / API server started at ::1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
+[info] i  functions: Watching "C:\web projects\code-build-tests\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\web projects\\code-build-tests\\functions\" for Cloud Functions..."}}
+[debug] [2024-02-04T15:03:32.716Z] Validating nodejs source
