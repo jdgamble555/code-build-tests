@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { loginWithGoogle, logout, user } from '$lib/firebase';
+	import { loginWithGoogle, logout, user } from '$lib/user';
 	import Todos from '@components/todos.svelte';
 	import Profile from '@components/profile.svelte';
 	

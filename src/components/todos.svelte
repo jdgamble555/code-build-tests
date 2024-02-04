@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { addTodo, getTodos } from '$lib/firebase';
+	import { addTodo, getTodos } from '$lib/todos';
 	import TodoItem from '@components/todo-item.svelte';
 
 	export let user: UserType;
@@ -10,7 +10,7 @@
 	const todos = getTodos(user.uid);
 
 	function add() {
-		addTodo(user.uid, text);
+		addTodo(text, user.uid);
 		text = '';
 	}
 </script>
@@ -18,11 +18,13 @@
 {#if $todos?.length}
 	<ul>
 		{#each $todos || [] as todo}
-			<TodoItem {todo} />
+			<TodoItem {todo} {user} />
 		{/each}
 	</ul>
 {/if}
 <form on:submit|preventDefault={add}>
 	<input class="border p-2 rounded-lg" bind:value={text} />
-	<button class="border p-2 rounded-lg bg-purple-600 text-white font-semibold" type="submit">Add Task</button>
+	<button class="border p-2 rounded-lg bg-purple-600 text-white font-semibold" type="submit">
+		Add Task
+	</button>
 </form>

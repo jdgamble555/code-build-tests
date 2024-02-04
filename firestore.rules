@@ -1,0 +1,161 @@
+rules_version = '2';
+
+service cloud.firestore {
+
+  match /databases/{database}/documents {
+
+    // HELPER FUNCTIONS
+
+    function docDeleted(path) {
+      // 1 📖 doc at path is deleted
+      return exists(path) && !existsAfter(path);
+    }
+    function docCreated(path) {
+      // 1 📖 doc at path is created
+      return existsAfter(path) && !exists(path);
+    }
+    function createResource() {
+      // create resource
+      return request.method == 'create';
+    }
+    function deleteResource() {
+      // delete resource
+      return request.method == 'delete';
+    } 
+    function requestCollection() {
+      // 3rd path is collection
+      return request.path[3];
+    }
+    function requestDoc() {
+      return request.path[4];
+    }
+    function isIncrement(before, after, field) {
+      // increment
+      return after[field] == before[field] + 1;
+    }
+    function isDecrement(before, after, field) {
+      // decrement
+      return after[field] == before[field] - 1;
+    }
+    function isCreateField(before, after, field) {
+      // field is created
+      return !(field in before.data) && (field in after.data);
+    }
+    function isDeleteField(before, after, field) {
+      // field is deleted
+      return (field in before.data) && !(field in after.data);
+    }
+    function hasOnly(data, fields) {
+      // data has only fields
+      return data.keys().hasOnly(fields);
+    }
+    function isOne(data, field) {
+      // field = 1
+      return data[field] == 1;
+    }
+
+    function isCountDecrement(before, after, field, isDeleteDoc) {
+      // field is deleted or doc is deleted from count = 1
+      let isDelete = isDeleteDoc || isDeleteField(before, after, field);
+      let isLastDecrement = isDelete && isOne(before, field);
+
+      // field is valid decrement at 1 multiple
+      return isDecrement(before, after, field) || isLastDecrement;
+    }
+
+    function isCountIncrement(before, after, field, isCreateDoc) {
+
+      // field is created or doc is created to count = 1
+      let isCreate = isCreateDoc || isCreateField(before, after, field);
+      let isFirstIncrement = isCreate && isOne(after, field);
+
+      // field is valid increment at 1 multiple
+      return isIncrement(before, after, field) || isFirstIncrement;
+    }
+
+    function counter(field, refField) {
+
+      let before = resource.data;
+      let after = request.resource.data;
+      
+      // only count as 1 📖 on resource doc
+      let resourceCreate = docCreated(after[refField]);
+      let resourceDelete = docDeleted(after[refField]);
+
+      // validate counter reference
+      let validFields = hasOnly(after, [field, refField]);
+
+      // validate collection ref
+      let validRef = requestDoc() == after[refField][3];
+
+      // is increment with resource create
+      let isValidIncrement = isCountIncrement(before, after, field, createResource());
+
+      // is decrement with resource delete
+      let isValidDecrement = isCountDecrement(before, after, field, deleteResource());
+
+      // is valid counter
+      let validCounter = (isValidIncrement && resourceCreate) || (isValidDecrement && resourceDelete);
+
+      // is valid counter doc
+      return validCounter && validRef && validFields;
+    }
+
+    function requestCounter(field, path) {
+
+      // only count as 1 📖 on count doc
+      let before = get(path).data;
+      let after = getAfter(path).data;
+      let createCount = docCreated(path);
+      let deleteCount = docDeleted(path);
+
+      // is increment with resource create
+      let isValidIncrement = isCountIncrement(before, after, field, createCount);
+
+      // is decrement with resource delete
+      let isValidDecrement = isCountDecrement(before, after, field, deleteCount);
+
+      // is valid counter
+      return (isValidIncrement && createResource()) || (isValidDecrement && deleteResource());
+    } 
+
+    // RULES
+
+    function hasCounter() {
+
+      // config, only count as 1 📖 on counter doc
+      let countField = 'count';
+      let countPath = /databases/$(database)/documents/_counters/$(requestCollection());
+
+      // check for counter
+      return requestCounter(countField, countPath);
+    }
+
+    function isCounter() {
+
+      // config
+      let countField = 'count';
+      let countRefField = 'resourceRef';
+
+      // check for counter
+      return counter(countField, countRefField);
+    }
+
+    // MATCHES
+
+    match /users/{document} {
+      allow read, write;
+    }
+
+    match /todos/{document} {
+      allow read;
+      allow create, delete: if hasCounter();
+    }
+
+    match /_counters/{document} { 
+      allow read;
+      allow write: if isCounter();
+    } 
+
+  }
+}
