@@ -65,7 +65,7 @@ export const addTodo = async (text: string, uid: string) => {
         createdAt: serverTimestamp()
     });
 
-    // extra
+    // optional user count
     const userRef = doc(db, 'users/' + uid);
     batch.set(userRef, {
         todoCount: increment(1),
@@ -91,7 +91,7 @@ export const deleteTodo = (id: string, uid: string) => {
         resourceRef: todoRef
     }, { merge: true });
 
-    // extra
+    // optional user count
     const userRef = doc(db, 'users/' + uid);
     batch.set(userRef, {
         todoCount: increment(-1),
