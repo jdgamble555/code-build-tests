@@ -17,7 +17,14 @@ npm i -g firebase-tools
 ```
 firebase emulators:start
 ```
-The app should work as expected.
+The svelte app should work as expected:  
+```
+npm i
+```
+```
+npm run dev
+```
+
 ___
 
 Read more at Code.Build:  
