@@ -17,7 +17,8 @@ npm i -g firebase-tools
 ```
 firebase emulators:start
 ```
-The svelte app should work as expected:  
+
+5. Run svelte in new terminal window.
 ```
 npm i
 ```
