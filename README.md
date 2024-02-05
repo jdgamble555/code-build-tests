@@ -11,8 +11,7 @@ Make sure the keys are in quotes.
 npm i -g firebase-tools
 ```  
 
-3. Install Java SDK
-https://www.oracle.com/java/technologies/downloads/  
+3. Install [Java SDK](https://www.oracle.com/java/technologies/downloads/)
 
 4. Run firebase emulators:
 ```
