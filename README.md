@@ -18,8 +18,9 @@ npm i -g firebase-tools
 firebase emulators:start
 ```
 The app should work as expected.
+___
 
-To read more on the app at Code.Build:  
+Read more at Code.Build:  
 [Firestore Secure Batch Increment](https://code.build/p/firestore-secure-batch-increment-IKO13Z)
 
 
