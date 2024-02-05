@@ -4,7 +4,7 @@
 ```
 PUBLIC_FIREBASE_CONFIG={YOUR FIREBASE CONFIG}
 ```
-Make sure the keys are in quotes.  
+Make sure the keys are in quotes!   
 
 2. Install Firebase Globally
 ```
@@ -19,7 +19,7 @@ firebase emulators:start
 ```
 The app should work as expected.
 
-To read more on the app at Code.Build:
+To read more on the app at Code.Build:  
 [Firestore Secure Batch Increment](https://code.build/p/firestore-secure-batch-increment-IKO13Z)
 
 
