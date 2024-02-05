@@ -19,7 +19,8 @@ firebase emulators:start
 ```
 The app should work as expected.
 
-To read more on the app at Code.Build: [Firestore Secure Batch Increment](https://code.build/p/firestore-secure-batch-increment-IKO13Z)
+To read more on the app at Code.Build:
+[Firestore Secure Batch Increment](https://code.build/p/firestore-secure-batch-increment-IKO13Z)
 
 
 ___
