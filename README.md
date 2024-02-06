@@ -4,7 +4,12 @@
 ```
 PUBLIC_FIREBASE_CONFIG={YOUR FIREBASE CONFIG}
 ```
-Make sure the keys are in quotes!   
+Make sure the keys are in quotes!
+
+You could also just use test config data if you just want to use the emulator:
+```
+PUBLIC_FIREBASE_CONFIG={"projectId":"test","appId":"test","apiKey":"test"}
+```
 
 2. Install Firebase Globally
 ```
